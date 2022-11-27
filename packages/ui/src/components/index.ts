@@ -4,4 +4,5 @@ export * from './Editor';
 export * from './Image';
 export * from './Loading';
 export * from './Modal';
-export * from './OverallLayout';
+export * from './Page';
+export * from './ThemeSwap';
