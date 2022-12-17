@@ -2,7 +2,7 @@ import { notion } from '@/api/notion';
 import type { MultiSelectDatabaseProperty } from '@/api/notion';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
-import { SEED_NOTION_DB_ID } from '../constants';
+import { SEED_DEFAULT_TAG, SEED_NOTION_DB_ID } from '../constants';
 
 const useSeedsRetrieve = () => {
 	const { isLoading, data } = useQuery({
@@ -12,7 +12,7 @@ const useSeedsRetrieve = () => {
 
 	const tags = useMemo<MultiSelectDatabaseProperty['multi_select']['options']>(() => {
 		const tagsProperty = data?.properties['Tags'] as MultiSelectDatabaseProperty;
-		return tagsProperty?.multi_select?.options ?? [];
+		return tagsProperty?.multi_select?.options.filter((opt) => opt.name !== SEED_DEFAULT_TAG.name) ?? [];
 	}, [
 		data?.properties,
 	]);

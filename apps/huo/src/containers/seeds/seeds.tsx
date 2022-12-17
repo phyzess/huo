@@ -1,7 +1,7 @@
 import { Loading } from '@phyzess/huo-ui';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import classnames from 'classnames';
-import { memo, useMemo, useRef } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import { SEEDS_CLS_PREFIX } from './constants';
 import { useSeedsList, useSeedsRetrieve } from './hooks';
 import { SeedEditor } from './seedEditor';
@@ -9,7 +9,8 @@ import { SeedItem } from './seedItem';
 
 const Seeds = memo(() => {
 	const { tags } = useSeedsRetrieve();
-	const { isLoading, seeds } = useSeedsList({ itemNumberPerGroup: 2 });
+	const [filterTag, setFilterTag] = useState('all');
+	const { isLoading, seeds } = useSeedsList({ itemNumberPerGroup: 2, filterTag: filterTag });
 
 	const parentRef = useRef(null);
 
@@ -31,7 +32,7 @@ const Seeds = memo(() => {
 		wrapperCls: classnames(SEEDS_CLS_PREFIX, 'h-full flex flex-col items-center justify-bettween'),
 		editorWrapperCls: classnames(`${SEEDS_CLS_PREFIX}__editor`, 'shrink-0 w-full max-w-5xl mx-auto bg-base-100'),
 		operationBarCls: classnames(`${SEEDS_CLS_PREFIX}__operations`, 'flex justify-end w-full max-w-5xl mx-auto py-2'),
-		tagSelectCls: classnames(`${SEEDS_CLS_PREFIX}__tags`, 'select select-sm select-accent w-fit min-w-36 max-w-xs'),
+		tagSelectCls: classnames(`${SEEDS_CLS_PREFIX}__tags`, 'select select-xs select-accent w-fit min-w-36 max-w-xs'),
 		seedGridWrapperCls: classnames(`${SEEDS_CLS_PREFIX}__seeds-grid`, 'flex-1 w-full mt-2 py-2 overflow-auto'),
 		seedsContainerCls: classnames(`${SEEDS_CLS_PREFIX}__seeds`, 'relative max-w-5xl mx-auto'),
 		seedRowCls: classnames(
@@ -46,8 +47,16 @@ const Seeds = memo(() => {
 				<SeedEditor />
 			</div>
 			<div className={operationBarCls}>
-				<select className={tagSelectCls}>
-					{tags.map((tag) => <option key={tag.id} selected={tag.name === 'seed'}>{tag.name}</option>)}
+				<select
+					className={tagSelectCls}
+					onChange={(e) => {
+						setFilterTag(e.target.value);
+					}}
+				>
+					<option key='all' value='all' selected={filterTag === 'all'}>All</option>
+					{tags.map((tag) => (
+						<option key={tag.id} value={tag.name} selected={tag.name === filterTag}>{tag.name}</option>
+					))}
 				</select>
 			</div>
 			<div className={seedGridWrapperCls} ref={parentRef}>

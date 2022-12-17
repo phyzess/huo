@@ -55,6 +55,11 @@ type MultiSelectDatabaseProperty = Extract<
 	{ type: 'multi_select' }
 >;
 
+type PageObjectResponseTags = Extract<
+	ValueOf<PageObjectResponse['properties']>,
+	{ type: 'multi_select' }
+>;
+
 /**
  * * refer to: https://developers.notion.com/docs/authorization#step-4-notion-responds-with-an-access_token-and-some-additional-information
  */
@@ -93,6 +98,7 @@ export type {
 	ListBlockChildrenResponse,
 	MultiSelectDatabaseProperty,
 	PageObjectResponse,
+	PageObjectResponseTags,
 	PickBlockObjectRequest,
 	PickType,
 	RichTextItemRequest,
