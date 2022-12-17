@@ -1,0 +1,5 @@
+enum AUTH_RECOIL {
+	NOTION_OAUTH = 'NOTION_OAUTH',
+}
+
+export { AUTH_RECOIL };

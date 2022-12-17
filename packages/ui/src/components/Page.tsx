@@ -5,11 +5,17 @@ interface IPageBaseProps {
 }
 
 const PageContainer = memo((props: IPageBaseProps) => {
-	return <div className='mx-auto h-screen' {...props} />;
+	return <div className='huo-page__container mx-auto h-screen overflow-hidden flex flex-col flex-nowrap' {...props} />;
 });
 
 const PageHeaderContainer = memo((props: IPageBaseProps) => {
-	return <div className='fixed left-0 flex justify-between items-center px-5 w-full h-[60px]' {...props} />;
+	return (
+		<div className='huo-page__header flex justify-between items-center px-5 w-full h-[60px] min-h-[60px]' {...props} />
+	);
 });
 
-export { PageContainer, PageHeaderContainer };
+const PageContentContainer = memo((props: IPageBaseProps) => {
+	return <div className='huo-page__content flex-1 w-full overflow-auto' {...props} />;
+});
+
+export { PageContainer, PageContentContainer, PageHeaderContainer };

@@ -18,13 +18,13 @@ const ThemeSwap = () => {
 	const handleClick = useCallback((e: MouseEvent<HTMLInputElement>) => {
 		e.stopPropagation();
 		changeTheme(alternativeTheme);
-	}, [alternativeTheme]);
+	}, [alternativeTheme, changeTheme]);
 
 	return (
-		<label className='btn btn-ghost btn-square swap swap-rotate'>
+		<label className='btn btn-ghost btn-square btn-sm swap swap-rotate'>
 			<input type='checkbox' data-set-theme={alternativeTheme} data-act-class='ACTIVECLASS' onClick={handleClick} />
-			<ScribblesSun className='swap-on fill-current w-10 h-10' />
-			<ScribblesMoon className='swap-off fill-current w-10 h-10' />
+			<ScribblesSun className='swap-on fill-current w-8 h-8' />
+			<ScribblesMoon className='swap-off fill-current w-8 h-8' />
 		</label>
 	);
 };

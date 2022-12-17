@@ -12,7 +12,8 @@
     "eslint": "^8.28.0",
     "eslint-config-alloy": "^4.7.0",
     "eslint-config-turbo": "latest",
-    "eslint-plugin-react": "7.31.11"
+    "eslint-plugin-react": "7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0"
   },
   "devDependencies": {
     "typescript": "^4.9.3"

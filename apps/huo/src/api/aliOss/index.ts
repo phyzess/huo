@@ -1,0 +1,1 @@
+export { aliOss } from './AliOss';

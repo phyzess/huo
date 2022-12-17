@@ -1,4 +1,4 @@
-import type { TablerIcon } from '@tabler/icons';
+import { CarbonIconType } from '@carbon/icons-react';
 import { CSSProperties, MutableRefObject, ReactNode } from 'react';
 import { BaseEditor, BaseText, Descendant, Node } from 'slate';
 import { HistoryEditor } from 'slate-history';
@@ -11,7 +11,7 @@ type TFormat = E_MARK | E_ELEMENT;
 
 /** ******** Toolbar **********/
 interface IToolbarButtonProps {
-	icon: HuoIcon | TablerIcon;
+	icon: HuoIcon | CarbonIconType;
 	active: boolean;
 	tooltip: string;
 	editor: CustomEditor;

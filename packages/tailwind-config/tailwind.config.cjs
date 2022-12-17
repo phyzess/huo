@@ -11,7 +11,7 @@ module.exports = {
 		// include packages when using in apps, but ignore this if ui package will be bundled
 		'../../packages/ui/**/*.{js,ts,jsx,tsx}',
 	],
-	plugins: [require('@tailwindcss/typography'), require('daisyui')],
+	plugins: [require('@tailwindcss/container-queries'), require('@tailwindcss/typography'), require('daisyui')],
 	daisyui: {
 		styled: true,
 		themes: ['dark', 'light'],

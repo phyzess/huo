@@ -5,7 +5,7 @@ type UndefinedAble<T> = T | undefined;
 type UndefinedNullable<T> = T | undefined | null;
 
 type RecursivePartial<T> = {
-  [P in keyof T]?: RecursivePartial<T[P]>;
+	[P in keyof T]?: RecursivePartial<T[P]>;
 };
 
 type ValueOf<T> = T[keyof T];
@@ -16,4 +16,6 @@ type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
 
 type XOR<T, U> = T | U extends object ? (Without<T, U> & U) | (Without<U, T> & T) : T | U;
 
-export type { Nullable, PartialRecord, RecursivePartial, UndefinedAble, UndefinedNullable, ValueOf, XOR };
+type ArrayElement<T> = T extends Array<infer R> ? R : never;
+
+export type { ArrayElement, Nullable, PartialRecord, RecursivePartial, UndefinedAble, UndefinedNullable, ValueOf, XOR };

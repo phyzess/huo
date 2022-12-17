@@ -36,6 +36,21 @@ enum E_LOG_TYPE {
 
 type TLogParam = string | Object | Array<TLogParam>;
 
+const defaultOptions = {
+	useTimestamps: false,
+	includeSessionMetadata: true,
+	useLocalStorage: false,
+	recordLogs: true,
+	autoTrim: true,
+	maxLines: 3000,
+	tailNumLines: 25,
+	logFilename: 'huo-logger.txt',
+	maxDepth: 20,
+	localStorageKey: 'huo-logger',
+	indent: '  ',
+	quoteStrings: true,
+};
+
 class Logger {
 	private _useTimestamps = false;
 	private _maxDepth = 20;
@@ -45,8 +60,8 @@ class Logger {
 	private _autoTrim = true;
 	private _maxLines = 3000;
 	private _tailNumLines = 25;
-	private _logFilename = 'keza-logger.txt';
-	private _localStorageKey = 'keza-logger';
+	private _logFilename = 'huo-logger.txt';
+	private _localStorageKey = 'huo-logger';
 	private _indent = '  ';
 	private _quoteStrings = true;
 
@@ -56,10 +71,13 @@ class Logger {
 
 	private _storedLogs = '';
 
+	private _mergedOptions;
+
 	public constructor(options?: Partial<ILoggerOptions>) {
-		if (options) {
-			this._applyOptions(options);
-		}
+		const mergedOptions = { ...options, ...defaultOptions };
+
+		this._mergedOptions = mergedOptions;
+		this._applyOptions(mergedOptions);
 
 		// START/RESUME LOG
 		if (this._useLocalStorage && window && !!window.localStorage) {
@@ -80,6 +98,17 @@ class Logger {
 		}
 	}
 
+	public clone = ({ tags, options }: { tags?: string[]; options?: Partial<ILoggerOptions> }) => {
+		const cloned = new Logger({ ...this._mergedOptions, ...options });
+		cloned.batchTags(this._tags);
+
+		if (tags) {
+			cloned.batchTags(tags);
+		}
+
+		return cloned;
+	};
+
 	public get logs() {
 		return this._storedLogs;
 	}
@@ -87,6 +116,10 @@ class Logger {
 	public get tags() {
 		return this._tags;
 	}
+
+	public batchTags = (newTags: string[]) => {
+		this._tags = [...this._tags, ...newTags];
+	};
 
 	public tag = (newTag: string) => {
 		this._tags.push(newTag);
@@ -252,15 +285,10 @@ class Logger {
 		return this._storedLogs;
 	}
 
-	private _applyOptions = (options: Partial<ILoggerOptions>) => {
-		if (options) {
-			for (const opt in options) {
-				// @ts-ignore
-				if (options[opt] !== undefined) {
-					// @ts-ignore
-					this[`_${opt}`] = options[opt];
-				}
-			}
+	private _applyOptions = (options: ILoggerOptions) => {
+		for (const [key, value] of Object.entries(options)) {
+			// @ts-ignore
+			this[`_${key}`] = value;
 		}
 	};
 

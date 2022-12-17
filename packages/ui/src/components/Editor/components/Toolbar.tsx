@@ -1,19 +1,18 @@
-// TODO replace all icons
 import {
-	IconBold,
-	IconCode,
-	IconItalic,
-	IconLink,
-	IconList,
-	IconListNumbers,
-	IconPhoto,
-	IconQuote,
-	IconSquareNumber1,
-	IconSquareNumber2,
-	IconSquareNumber3,
-	IconStrikethrough,
-	IconUnderline,
-} from '@tabler/icons';
+	Code,
+	Image,
+	Link,
+	ListBulleted,
+	ListNumbered,
+	Number_1,
+	Number_2,
+	Number_3,
+	Quotes,
+	TextBold,
+	TextItalic,
+	TextStrikethrough,
+	TextUnderline,
+} from '@carbon/icons-react';
 import React, { memo, useContext } from 'react';
 import { Editor, Range } from 'slate';
 import { useSlateSelection, useSlateStatic } from 'slate-react';
@@ -25,27 +24,27 @@ import { BlockButton, MarkButton, ToolbarButton } from './Button';
 
 const marks: Record<E_MARK, IFormatButtonProps<E_MARK>> = {
 	[E_MARK.BOLD]: {
-		icon: IconBold,
+		icon: TextBold,
 		format: E_MARK.BOLD,
 		tooltip: 'Bold',
 	},
 	[E_MARK.ITALIC]: {
-		icon: IconItalic,
+		icon: TextItalic,
 		format: E_MARK.ITALIC,
 		tooltip: 'Italic',
 	},
 	[E_MARK.UNDERLINE]: {
-		icon: IconUnderline,
+		icon: TextUnderline,
 		format: E_MARK.UNDERLINE,
 		tooltip: 'Underline',
 	},
 	[E_MARK.CODE]: {
-		icon: IconCode,
+		icon: Code,
 		format: E_MARK.CODE,
 		tooltip: 'Code',
 	},
 	[E_MARK.STRIKE_THROUGH]: {
-		icon: IconStrikethrough,
+		icon: TextStrikethrough,
 		format: E_MARK.STRIKE_THROUGH,
 		tooltip: 'StrikeThrough',
 	},
@@ -56,32 +55,32 @@ const blocks: Omit<
 	E_ELEMENT.PARAGRAPH | E_ELEMENT.LIST_ITEM | E_ELEMENT.IMAGE | E_ELEMENT.LINK | E_ELEMENT.TAG
 > = {
 	[E_ELEMENT.HEADING_ONE]: {
-		icon: IconSquareNumber1,
+		icon: Number_1,
 		format: E_ELEMENT.HEADING_ONE,
 		tooltip: 'Heading One',
 	},
 	[E_ELEMENT.HEADING_TWO]: {
-		icon: IconSquareNumber2,
+		icon: Number_2,
 		format: E_ELEMENT.HEADING_TWO,
 		tooltip: 'Heading Two',
 	},
 	[E_ELEMENT.HEADING_THREE]: {
-		icon: IconSquareNumber3,
+		icon: Number_3,
 		format: E_ELEMENT.HEADING_THREE,
 		tooltip: 'Heading Three',
 	},
 	[E_ELEMENT.BLOCK_QUOTE]: {
-		icon: IconQuote,
+		icon: Quotes,
 		format: E_ELEMENT.BLOCK_QUOTE,
 		tooltip: 'Block Quote',
 	},
 	[E_ELEMENT.NUMBERED_LIST]: {
-		icon: IconListNumbers,
+		icon: ListNumbered,
 		format: E_ELEMENT.NUMBERED_LIST,
 		tooltip: 'Number List',
 	},
 	[E_ELEMENT.BULLETED_LIST]: {
-		icon: IconList,
+		icon: ListBulleted,
 		format: E_ELEMENT.BULLETED_LIST,
 		tooltip: 'Bulleted List',
 	},
@@ -117,7 +116,7 @@ const Toolbar: React.FC<{}> = memo(() => {
 			{Object.entries(marks).map(([key, props]) => <MarkButton key={key} {...props} />)}
 			{Object.entries(blocks).map(([key, props]) => <BlockButton key={key} {...props} />)}
 			<ToolbarButton
-				icon={IconLink}
+				icon={Link}
 				active={false}
 				editor={editor}
 				focusAfterClick={false}
@@ -125,7 +124,7 @@ const Toolbar: React.FC<{}> = memo(() => {
 				onClick={handleOpenLinkDialog}
 			/>
 			<ToolbarButton
-				icon={IconPhoto}
+				icon={Image}
 				active={false}
 				editor={editor}
 				focusAfterClick={false}

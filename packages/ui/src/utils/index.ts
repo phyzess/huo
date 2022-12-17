@@ -3,4 +3,4 @@ export * from './getClassifyCls';
 export * from './id';
 export * from './Logger';
 export * from './readFile';
-export * from './restfulFormat';
+export * from './str2Base64';
