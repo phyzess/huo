@@ -6,17 +6,18 @@ import { TSeedBlockItem } from './types';
 import { deserialize } from './utils/deserialize';
 
 const getItemRowElement = (row: TSeedBlockItem) => {
+	const rowKey = `row-key-${row.type}-${row.contentType}-${row.siblingIndex}-${row.indentCoeff}`;
 	if (!row.content || !row.children) {
-		return;
+		return null;
 	}
 
 	if (row.contentType === 'external' || row.contentType === 'file') {
 		if (row.type === 'IMAGE') {
 			// @ts-ignore
 			const src = row.content[row.contentType].url;
-			return <Image key={src} src={src} width='50%' />;
+			return <Image key={rowKey} src={src} width='50%' />;
 		}
-		return;
+		return null;
 	}
 
 	let children = null;
@@ -24,30 +25,30 @@ const getItemRowElement = (row: TSeedBlockItem) => {
 		children = row.children.map(getItemRowElement);
 	}
 
-	const paragraph = <SeedParagraph {...row.content}>{children}</SeedParagraph>;
+	const paragraph = <SeedParagraph key={rowKey} {...row.content}>{children}</SeedParagraph>;
 
 	switch (row.type) {
 		case E_ELEMENT.HEADING_ONE:
-			return <h1>{paragraph}</h1>;
+			return <h1 key={rowKey}>{paragraph}</h1>;
 		case E_ELEMENT.HEADING_TWO:
-			return <h2>{paragraph}</h2>;
+			return <h2 key={rowKey}>{paragraph}</h2>;
 		case E_ELEMENT.HEADING_THREE:
-			return <h3>{paragraph}</h3>;
+			return <h3 key={rowKey}>{paragraph}</h3>;
 		case E_ELEMENT.BLOCK_QUOTE:
 			return (
-				<blockquote className='border-l-2 border-l-primary my-4 mx-2 py-2 px-4'>
+				<blockquote key={rowKey} className='border-l-2 border-l-primary my-4 mx-2 py-2 px-4'>
 					{paragraph}
 				</blockquote>
 			);
 		case E_ELEMENT.BULLETED_LIST:
 			return (
-				<SeedBulletedListItem siblingIndex={row.siblingIndex} indentCoeff={row.indentCoeff}>
+				<SeedBulletedListItem key={rowKey} siblingIndex={row.siblingIndex} indentCoeff={row.indentCoeff}>
 					{paragraph}
 				</SeedBulletedListItem>
 			);
 		case E_ELEMENT.NUMBERED_LIST:
 			return (
-				<SeedNumberedListItem siblingIndex={row.siblingIndex} indentCoeff={row.indentCoeff}>
+				<SeedNumberedListItem key={rowKey} siblingIndex={row.siblingIndex} indentCoeff={row.indentCoeff}>
 					{paragraph}
 				</SeedNumberedListItem>
 			);

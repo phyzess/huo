@@ -49,14 +49,13 @@ const Seeds = memo(() => {
 			<div className={operationBarCls}>
 				<select
 					className={tagSelectCls}
+					value={filterTag}
 					onChange={(e) => {
 						setFilterTag(e.target.value);
 					}}
 				>
-					<option key='all' value='all' selected={filterTag === 'all'}>All</option>
-					{tags.map((tag) => (
-						<option key={tag.id} value={tag.name} selected={tag.name === filterTag}>{tag.name}</option>
-					))}
+					<option key='all' value='all'>All</option>
+					{tags.map((tag) => <option key={tag.id} value={tag.name}>{tag.name}</option>)}
 				</select>
 			</div>
 			<div className={seedGridWrapperCls} ref={parentRef}>
