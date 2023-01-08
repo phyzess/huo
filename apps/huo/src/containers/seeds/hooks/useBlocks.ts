@@ -34,6 +34,7 @@ const useBlocks = (blockId: string, recursive = false) => {
 	const result = useQuery({
 		queryKey: ['blocks', blockId],
 		queryFn: ({ queryKey: [_, blockId] }) => retrieveBlocksChildren(blockId, recursive),
+		enabled: !!blockId,
 	});
 
 	return result;
